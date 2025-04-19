@@ -11,6 +11,21 @@ describe("scrambleWord", () => {
     // This test has a small chance to fail if shuffle returns original order
     expect(scrambled).not.toBe(word);
   });
+
+  // Additional tests for edge cases
+  it("handles single-character words", () => {
+    expect(scrambleWord("a")).toBe("a");
+  });
+
+  it("handles empty strings", () => {
+    expect(scrambleWord("")).toBe("");
+  });
+
+  it("preserves all original characters", () => {
+    const word = "testing";
+    const scrambled = scrambleWord(word);
+    expect([...scrambled].sort().join("")).toBe([...word].sort().join(""));
+  });
 });
 
 describe("isCorrect", () => {
@@ -20,5 +35,18 @@ describe("isCorrect", () => {
 
   it("rejects an incorrect guess", () => {
     expect(isCorrect("node", "deno")).toBe(false);
+  });
+
+  // Additional tests for edge cases
+  it("handles whitespace", () => {
+    expect(isCorrect("test", " test ")).toBe(true);
+  });
+
+  it("handles empty strings", () => {
+    expect(isCorrect("", "")).toBe(true);
+  });
+
+  it("handles mixed case", () => {
+    expect(isCorrect("TeSt", "tEsT")).toBe(true);
   });
 });
